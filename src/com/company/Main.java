@@ -7,7 +7,8 @@ public class Main {
 
         //callStringReverseFunc();
         //callRotateFunc();
-        callLinkList();
+        //callLinkList();
+        callBiTree();
     }
 
     private static void callRotateFunc(){
@@ -37,5 +38,10 @@ public class Main {
         LinkList.printList(node);
         node = LinkList.removeFromList(node, 17);
         LinkList.printList(node);
+    }
+
+    private static void callBiTree(){
+        BiTreeNode tree = BiTree.createTree("10 20 L 10 30 R 20 40 L 20 60 R");
+        System.out.println(tree);
     }
 }

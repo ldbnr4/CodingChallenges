@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
  * Created by boyice on 8/16/2016.
  *
  */
-public class LinkList {
+class LinkList {
     @Nullable
     static Node createList(Integer[] nums){
         if( nums.length == 0 ) {

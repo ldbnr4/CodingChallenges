@@ -51,16 +51,23 @@ class StringArray {
         }
 
         System.out.println("Beginning string: \""+sentence+"\"");
+        // load string into a character array
         char[] chars = sentence.toCharArray();
         String result = "";
 
+        // loop through the entire string character by character
         for(int cursor = chars.length-1, wordEnd = chars.length-1; cursor >= 0; cursor--){
+            // check if a non letter has been reached
             if (String.valueOf(chars[cursor]).matches("\\W") || cursor == 0){
-                String word;
-                word = String.valueOf(chars).substring(cursor, wordEnd+1);
+                // the word immediately before the non letter was reached
+                String word = String.valueOf(chars).substring(cursor, wordEnd+1);
+                // remove space from the front of the word if it is on the end of the original string
                 if(wordEnd == chars.length-1) word = word.replaceFirst(" ", "");
+                // add leading space on the first word of the original string
                 if(cursor == 0) word = " " + word;
+                // add the word to the result reversed string
                 result += word;
+                //update to the end of the next word
                 wordEnd = cursor-1;
             }
         }
@@ -68,7 +75,3 @@ class StringArray {
         System.out.println("Reversed string: \""+result+"\"\n");
     }
 }
-
-/*
- * Copyright (c) 2015, by The Curators of University of Missouri, All Rights Reserved
- */
