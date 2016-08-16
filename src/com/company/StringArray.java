@@ -20,6 +20,7 @@ class StringArray {
         System.out.print("Before: "+ Arrays.toString(array));
         System.out.println(" Shift = "+shift);
 
+        // shorten shift if it is larger than the array
         if(abs(shift) > length){
             shift = shift%length;
         }
@@ -27,13 +28,16 @@ class StringArray {
         Object[] result = new Object[length];
         for (int oldPosition = 0, newPosition; oldPosition < length; oldPosition++) {
             newPosition = oldPosition + shift;
+            // wrap around if new position is larger than the length
             if (newPosition >= length) {
                 newPosition = newPosition % length;
             }
+            // case for a left shift
             if(newPosition < 0 ){
                 newPosition += length;
             }
 
+            // place the item in the new location
             result[newPosition] = array[oldPosition];
         }
 
@@ -43,26 +47,25 @@ class StringArray {
     static void stringReversal(String sentence){
         if(sentence.isEmpty()){
             System.out.println("Empty string!\n");
+            return;
         }
 
         System.out.println("Beginning string: \""+sentence+"\"");
         char[] chars = sentence.toCharArray();
         String result = "";
 
-        for(int cursor = chars.length-1, wordStart = chars.length-1; cursor >= 0; cursor--){
+        for(int cursor = chars.length-1, wordEnd = chars.length-1; cursor >= 0; cursor--){
             if (String.valueOf(chars[cursor]).matches("\\W") || cursor == 0){
                 String word;
-                if (wordStart == cursor){
-                    word = String.valueOf(chars[wordStart]);
-                }else {
-                    word = String.valueOf(chars).substring(cursor, wordStart);
-                }
+                word = String.valueOf(chars).substring(cursor, wordEnd+1);
+                if(wordEnd == chars.length-1) word = word.replaceFirst(" ", "");
+                if(cursor == 0) word = " " + word;
                 result += word;
-                wordStart = cursor;
+                wordEnd = cursor-1;
             }
         }
 
-        System.out.println("Reversed string: \""+result+"\"");
+        System.out.println("Reversed string: \""+result+"\"\n");
     }
 }
 
