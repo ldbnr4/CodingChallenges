@@ -12,4 +12,8 @@ class BiTreeNode extends Node{
         left = null;
         right = null;
     }
+
+    boolean isLeaf(){
+        return left == null && right == null;
+    }
 }

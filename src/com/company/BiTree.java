@@ -1,7 +1,10 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by boyice on 8/16/2016.
@@ -33,6 +36,7 @@ class BiTree {
                 }
                 // set the root
                 if(root == null) root = currentNode;
+                // fill our holder array with the two nodes
                 if(nodeArray[0] == null) nodeArray[0] = currentNode;
                 else if (nodeArray[1] == null) nodeArray[1] = currentNode;
                 else {
@@ -59,18 +63,67 @@ class BiTree {
         return root;
     }
 
-    static void serializeTree(BiTreeNode root, Integer[] array){
+    static ArrayList<Integer> serializeTree(BiTreeNode root, ArrayList<Integer> array){
         // create stack to hold tree nodes
         Stack<BiTreeNode> stack = new Stack<>();
-        // add the root to the bottom of the stack
-        stack.push(root);
-        // create a cursor to do traversal
-        BiTreeNode cursor = root.left;
-        // depth first inorder traverse the tree
-        while ( cursor != null ){
-            if ( !stack.contains(cursor) ){
-                stack.push(cursor);
+        // depth first, inorder traverse the tree
+        inorder(root, stack, array);
+        return array;
+    }
+
+    private static void inorder(BiTreeNode node, Stack<BiTreeNode> stack, ArrayList<Integer> arrayList){
+        // base case
+        if(node == null) {
+            // if there is something on the stack we can add it to our array
+            if(!stack.isEmpty()) {
+                BiTreeNode topOfStack = stack.pop();
+                arrayList.add(topOfStack.data);
             }
         }
+        else{
+            // traverse the left side
+            inorder(node.left, stack, arrayList);
+            // add the node to the stack after going all the way left
+            stack.push(node);
+            // traverse the right side
+            inorder(node.right, stack, arrayList);
+        }
+    }
+    static BiTreeNode deserializeTree(ArrayList<Integer> array){
+
+        int min = Integer.MAX_VALUE;
+        for(Integer val : array){
+            if (val < min) min = val;
+        }
+
+        BiTreeNode root = new BiTreeNode(min);
+
+        for(int i = 0; i < array.size(); i++){
+            if(i < array.size()-2){
+                int first = array.get(i);
+                int second = array.get(i+1);
+                BiTreeNode parent;
+                BiTreeNode child;
+
+                if( first > second){
+                    // first is a child of second
+                }
+                else{
+                    // first is the parent of second
+                }
+                //if(i != 0 && parent.left == null){
+                    // assign child to left parent
+                //}
+                //else{
+                    //
+                //}
+
+            }
+            else{
+
+            }
+        }
+
+        return null;
     }
 }

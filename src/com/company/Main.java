@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -42,6 +44,11 @@ public class Main {
 
     private static void callBiTree(){
         BiTreeNode tree = BiTree.createTree("10 20 L 10 30 R 20 40 L 20 60 R");
-        System.out.println(tree);
+        ArrayList<Integer> list = new ArrayList<>();
+        System.out.println(BiTree.serializeTree(tree, list));
+
+        tree = BiTree.createTree("1 2 L 2 4 R 1 3 R 3 5 L 5 7 L 3 6 R 6 8 L 6 9 R");
+        list = new ArrayList<>();
+        System.out.println(BiTree.serializeTree(tree, list));
     }
 }
