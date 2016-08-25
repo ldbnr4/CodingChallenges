@@ -1,15 +1,15 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
 
-        //callStringReverseFunc();
-        //callRotateFunc();
-        //callLinkList();
+        // callStringReverseFunc();
+        // callRotateFunc();
+        // callLinkList();
         callBiTree();
     }
 
@@ -43,12 +43,53 @@ public class Main {
     }
 
     private static void callBiTree(){
-        BiTreeNode tree = BiTree.createTree("10 20 L 10 30 R 20 40 L 20 60 R");
-        ArrayList<Integer> list = new ArrayList<>();
-        System.out.println(BiTree.serializeTree(tree, list));
+        String serialString;
+        BiTreeNode tree, tree2;
 
-        tree = BiTree.createTree("1 2 L 2 4 R 1 3 R 3 5 L 5 7 L 3 6 R 6 8 L 6 9 R");
-        list = new ArrayList<>();
-        System.out.println(BiTree.serializeTree(tree, list));
+        /*
+         * First Tree
+         */
+        tree = BiTree.deserializeTree("20 40 L 20 60 R 10 20 L 10 30 R");
+
+        serialString = BiTree.preorderTreeSerialization(tree);
+        System.out.println("Preorder serialization: " + serialString);
+        tree2 = BiTree.deserializeTree(serialString);
+        if (!BiTreeNode.compare(tree, tree2)) throw new AssertionError();
+
+        serialString = BiTree.inorderTreeSerialization(tree);
+        System.out.println("Inorder serialization: " + serialString);
+        tree2 = BiTree.deserializeTree(serialString);
+        if (!BiTreeNode.compare(tree, tree2)) throw new AssertionError();
+
+        serialString = BiTree.postorderTreeSerialization(tree);
+        System.out.println("Postorder serialization: " + serialString);
+        tree2 = BiTree.deserializeTree(serialString);
+        if (!BiTreeNode.compare(tree, tree2)) throw new AssertionError();
+
+        System.out.println();
+
+        /*
+         * Second Tree
+         */
+        tree = BiTree.deserializeTree("1 2 L 2 4 R 1 3 R 3 5 L 5 7 L 3 6 R 6 8 L 6 9 R");
+
+        serialString = BiTree.preorderTreeSerialization(tree);
+        System.out.println("Preorder serialization: " + serialString);
+        tree2 = BiTree.deserializeTree(serialString);
+        if (!BiTreeNode.compare(tree, tree2)) throw new AssertionError();
+
+
+        serialString = BiTree.inorderTreeSerialization(tree);
+        System.out.println("Inorder serialization: " + serialString);
+        tree2 = BiTree.deserializeTree(serialString);
+        if (!BiTreeNode.compare(tree, tree2)) throw new AssertionError();
+
+        serialString = BiTree.postorderTreeSerialization(tree);
+        System.out.println("Postorder serialization: " + serialString);
+        tree2 = BiTree.deserializeTree(serialString);
+        if (!BiTreeNode.compare(tree, tree2)) throw new AssertionError();
+
+        System.out.println();
+
     }
 }

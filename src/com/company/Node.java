@@ -8,8 +8,11 @@ class Node {
     Node next;
     int data;
 
+    Node(){}
+
     Node(int d) {
         data = d;
         next = null;
     }
+
 }

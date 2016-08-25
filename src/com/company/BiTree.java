@@ -1,10 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by boyice on 8/16/2016.
@@ -12,14 +8,13 @@ import java.util.regex.Pattern;
  */
 class BiTree {
 
-    static BiTreeNode createTree(String treeString){
+    static BiTreeNode deserializeTree(String treeString){
         // split the string by spaces
         String[] treeParts = treeString.split(" ");
         // temp holder array for connecting nodes
         BiTreeNode[] nodeArray = new BiTreeNode[2];
         // hash of all the nodes in the tree
         HashMap<Integer, BiTreeNode> treeNodeHashMap = new HashMap<>();
-        BiTreeNode root = null;
         BiTreeNode currentNode;
         for (String treePart : treeParts) {
             // try to convert tree string part into an int
@@ -34,8 +29,6 @@ class BiTree {
                 else{
                     currentNode = treeNodeHashMap.get(num);
                 }
-                // set the root
-                if(root == null) root = currentNode;
                 // fill our holder array with the two nodes
                 if(nodeArray[0] == null) nodeArray[0] = currentNode;
                 else if (nodeArray[1] == null) nodeArray[1] = currentNode;
@@ -60,70 +53,89 @@ class BiTree {
                 nodeArray[1] = null;
             }
         }
-        return root;
+
+        return getRootNode(treeNodeHashMap);
     }
 
-    static ArrayList<Integer> serializeTree(BiTreeNode root, ArrayList<Integer> array){
-        // create stack to hold tree nodes
-        Stack<BiTreeNode> stack = new Stack<>();
-        // depth first, inorder traverse the tree
-        inorder(root, stack, array);
-        return array;
+    private static BiTreeNode getRootNode(HashMap<Integer, BiTreeNode> treeNodeHashMap) {
+        final int[] max = {Integer.MIN_VALUE};
+        final int[] maxKey = {0};
+        treeNodeHashMap.forEach((k,v)->{
+            int nodeHeight = BiTreeNode.getHeight(v);
+            if(max[0] < nodeHeight){
+                max[0] = nodeHeight;
+                maxKey[0] = k;
+            }
+        });
+        return treeNodeHashMap.get(maxKey[0]);
     }
 
-    private static void inorder(BiTreeNode node, Stack<BiTreeNode> stack, ArrayList<Integer> arrayList){
-        // base case
-        if(node == null) {
-            // if there is something on the stack we can add it to our array
-            if(!stack.isEmpty()) {
-                BiTreeNode topOfStack = stack.pop();
-                arrayList.add(topOfStack.data);
-            }
-        }
-        else{
-            // traverse the left side
-            inorder(node.left, stack, arrayList);
-            // add the node to the stack after going all the way left
-            stack.push(node);
-            // traverse the right side
-            inorder(node.right, stack, arrayList);
-        }
+    static String preorderTreeSerialization(BiTreeNode root){
+        // create and return the String for the serialized tree
+        return preorderTreeSerialization(root, "");
     }
-    static BiTreeNode deserializeTree(ArrayList<Integer> array){
-
-        int min = Integer.MAX_VALUE;
-        for(Integer val : array){
-            if (val < min) min = val;
-        }
-
-        BiTreeNode root = new BiTreeNode(min);
-
-        for(int i = 0; i < array.size(); i++){
-            if(i < array.size()-2){
-                int first = array.get(i);
-                int second = array.get(i+1);
-                BiTreeNode parent;
-                BiTreeNode child;
-
-                if( first > second){
-                    // first is a child of second
-                }
-                else{
-                    // first is the parent of second
-                }
-                //if(i != 0 && parent.left == null){
-                    // assign child to left parent
-                //}
-                //else{
-                    //
-                //}
-
+    private static String preorderTreeSerialization(BiTreeNode root, String serialString) {
+        // base criteria
+        if(root != null) {
+            // add the node's connections to it's children to the serialized string
+            if(root.left != null){
+                serialString += root.data + " " + root.left.data + " L ";
             }
-            else{
+            if(root.right != null){
+                serialString += root.data + " " + root.right.data + " R ";
+            }
+            // recursive call to traverse left first
+            serialString = preorderTreeSerialization(root.left, serialString);
+            // recursive call to traverse right after going left first
+            serialString = preorderTreeSerialization(root.right, serialString);
+        }
+        return serialString;
+    }
 
+    static String inorderTreeSerialization(BiTreeNode root) {
+        // create and return the String for the serialized tree
+        return inorderTreeSerialization(root, "");
+    }
+
+    private static String inorderTreeSerialization(BiTreeNode root, String serialString){
+        // base criteria
+        if (root != null){
+            // recursive call to traverse left first
+            serialString = inorderTreeSerialization(root.left, serialString);
+            // add the node's connections to it's children to the serialized string
+            if(root.left != null){
+                serialString += root.data + " " + root.left.data + " L ";
+            }
+            if(root.right != null){
+                serialString += root.data + " " + root.right.data + " R ";
+            }
+            // recursive call to traverse left after adding node to the array list
+            serialString = inorderTreeSerialization(root.right, serialString);
+        }
+        return serialString;
+    }
+
+    static String postorderTreeSerialization(BiTreeNode root) {
+        // create and return the String for the serialized tree
+        return postorderTreeSerialization(root, "");
+
+    }
+
+    private static String postorderTreeSerialization(BiTreeNode root, String serialString){
+        // base criteria
+        if(root != null){
+            // recursive call to traverse left first
+            serialString = postorderTreeSerialization(root.left, serialString);
+            // recursive call to traverse right after going left first
+            serialString = postorderTreeSerialization(root.right, serialString);
+            // add the node's connections to it's children to the serialized string
+            if(root.left != null){
+                serialString += root.data + " " + root.left.data + " L ";
+            }
+            if(root.right != null){
+                serialString += root.data + " " + root.right.data + " R ";
             }
         }
-
-        return null;
+        return serialString;
     }
 }
