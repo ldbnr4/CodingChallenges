@@ -1,16 +1,15 @@
 package com.company;
 
-import java.util.Stack;
-
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-
         // callStringReverseFunc();
         // callRotateFunc();
         // callLinkList();
-        callBiTree();
+        // callBiTree();
+        // callSpiralMatrix();
+        callBSTree();
+
     }
 
     private static void callRotateFunc(){
@@ -90,6 +89,28 @@ public class Main {
         if (!BiTreeNode.compare(tree, tree2)) throw new AssertionError();
 
         System.out.println();
+
+    }
+
+    private static void callSpiralMatrix(){
+        int index = 0;
+        try {
+            index = SpiralMatrix.getFromSpiralMatrix(new int[][]{
+                    {1,2,3,4},
+                    {5,6,7,8},
+                    {9,0,1,2},
+                    {3,4,5,6}
+            }, 4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(index);
+    }
+
+    private static void callBSTree(){
+
+        BiTreeNode tree = BiTree.deserializeTree("20 40 L 20 60 R 10 20 L 10 30 R");
+        BSTree.biTreeToBSTree(tree);
 
     }
 }
