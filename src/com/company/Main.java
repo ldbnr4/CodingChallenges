@@ -1,5 +1,10 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -8,8 +13,8 @@ public class Main {
         // callLinkList();
         // callBiTree();
         // callSpiralMatrix();
-        callBSTree();
-
+        // callBSTree();
+        System.out.println(findLIS(new Vector<Integer>(Arrays.asList(0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15))));
     }
 
     private static void callRotateFunc(){
@@ -112,5 +117,48 @@ public class Main {
         BiTreeNode tree = BiTree.deserializeTree("20 40 L 20 60 R 10 20 L 10 30 R");
         BSTree.biTreeToBSTree(tree);
 
+    }
+
+    private static List<Integer> findLIS(List<Integer> sequence){ //N^2
+        int size = sequence.size();
+        // Add boundary case, when array size is one
+        Vector<Integer> tailTable   = new Vector<Integer>();
+        int len; // always points empty slot
+
+        tailTable.add(sequence.get(0));
+        len = 1;
+        for (int i = 1; i < size; i++)
+        {
+            if (sequence.get(i) < tailTable.get(0))
+                // new smallest value
+                tailTable.set(0, sequence.get(i));
+
+            else if (sequence.get(i) > tailTable.get(len-1)) {
+                // A[i] wants to extend largest subsequence
+                tailTable.add(sequence.get(i));
+                len++;
+            }
+            else
+                // A[i] wants to be current end candidate of an existing
+                // subsequence. It will replace ceil value in tailTable
+                tailTable.set(CeilIndex(tailTable, -1, len-1, sequence.get(i)), sequence.get(i));
+        }
+        return tailTable;
+    }
+
+    // Binary search (note boundaries in the caller)
+    // A[] is ceilIndex in the caller
+    private static int CeilIndex(Vector<Integer> A, int l, int r, int key)
+    {
+        while (r - l > 1)
+        {
+            int m = l + (r - l)/2;
+            if (A.get(m)>=key)
+                r = m;
+            else
+                l = m;
+        }
+
+        return r;
     }
 }

@@ -45,7 +45,7 @@ public class BSTree {
     }
 
     static ArrayList<Integer> getInorder(BiTreeNode tree){
-        ArrayList<Integer> sortedList = new ArrayList<>();
+        ArrayList<Integer> sortedList = new ArrayList();
         getInorder(tree, sortedList);
         return sortedList;
     }

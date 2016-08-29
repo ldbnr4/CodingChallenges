@@ -14,7 +14,7 @@ class BiTree {
         // temp holder array for connecting nodes
         BiTreeNode[] nodeArray = new BiTreeNode[2];
         // hash of all the nodes in the tree
-        HashMap<Integer, BiTreeNode> treeNodeHashMap = new HashMap<>();
+        HashMap<Integer, BiTreeNode> treeNodeHashMap = new HashMap();
         BiTreeNode currentNode;
         for (String treePart : treeParts) {
             // try to convert tree string part into an int
@@ -60,13 +60,13 @@ class BiTree {
     private static BiTreeNode getRootNode(HashMap<Integer, BiTreeNode> treeNodeHashMap) {
         final int[] max = {Integer.MIN_VALUE};
         final int[] maxKey = {0};
-        treeNodeHashMap.forEach((k,v)->{
+        /*treeNodeHashMap.forEach((k,v)->{
             int nodeHeight = BiTreeNode.getHeight(v);
             if(max[0] < nodeHeight){
                 max[0] = nodeHeight;
                 maxKey[0] = k;
             }
-        });
+        });*/
         return treeNodeHashMap.get(maxKey[0]);
     }
 
