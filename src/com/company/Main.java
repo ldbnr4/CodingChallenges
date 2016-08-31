@@ -210,6 +210,10 @@ public class Main {
     }
 
     private static void callBiTree2(){
-        BiTree.levelDiff(BiTree.deserializeTree("10 20 L 10 30 R 20 40 L 20 60 R"));
+        System.out.println(
+                BiTree.levelDiff(
+                    BiTree.deserializeTree("10 20 L 10 30 R 20 40 L 20 60 R")
+                )
+        );
     }
 }

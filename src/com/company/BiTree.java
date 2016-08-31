@@ -143,19 +143,17 @@ class BiTree {
     }
 
     static int levelDiff(BiTreeNode root){
-        Queue<BiTreeNode> nodequeue = new LinkedList<>();
-        BiTreeNode tempNode;
-        int oddSum = root.data, evenSum = 0;
-        boolean odd = true;
-        nodequeue.add(root.left);
-        while (!nodequeue.isEmpty()){
-            tempNode = nodequeue.poll();
-            if(odd) oddSum += tempNode.data;
-            else evenSum += tempNode.data;
-
-            odd = !odd;
-        }
-        return 0;
+        int sums[] = new int[2];
+        levelDiff(root, sums, false);
+        return sums[0] - sums[1];
+    }
+    private static void levelDiff(BiTreeNode root, int sums[], boolean even){
+        if(root == null) return;
+        if(even) sums[1] += root.data;
+        else sums[0] += root.data;
+        even = !even;
+        levelDiff(root.left, sums, even);
+        levelDiff(root.right, sums, even);
     }
 
 }
