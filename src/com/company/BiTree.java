@@ -1,6 +1,6 @@
 package com.company;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by boyice on 8/16/2016.
@@ -14,7 +14,7 @@ class BiTree {
         // temp holder array for connecting nodes
         BiTreeNode[] nodeArray = new BiTreeNode[2];
         // hash of all the nodes in the tree
-        HashMap<Integer, BiTreeNode> treeNodeHashMap = new HashMap();
+        HashMap<Integer, BiTreeNode> treeNodeHashMap = new HashMap<>();
         BiTreeNode currentNode;
         for (String treePart : treeParts) {
             // try to convert tree string part into an int
@@ -58,22 +58,25 @@ class BiTree {
     }
 
     private static BiTreeNode getRootNode(HashMap<Integer, BiTreeNode> treeNodeHashMap) {
-        final int[] max = {Integer.MIN_VALUE};
-        final int[] maxKey = {0};
-        /*treeNodeHashMap.forEach((k,v)->{
-            int nodeHeight = BiTreeNode.getHeight(v);
-            if(max[0] < nodeHeight){
-                max[0] = nodeHeight;
-                maxKey[0] = k;
+        int max = Integer.MIN_VALUE;
+        int maxKey = 0, maxHeight, key;
+        for (Map.Entry<Integer, BiTreeNode> integerBiTreeNodeEntry : treeNodeHashMap.entrySet()) {
+            Map.Entry pair = (Map.Entry) integerBiTreeNodeEntry;
+            key = (int) pair.getKey();
+            maxHeight = BiTreeNode.getHeight(treeNodeHashMap.get(key));
+            if (maxHeight > max) {
+                maxKey = key;
+                max = maxHeight;
             }
-        });*/
-        return treeNodeHashMap.get(maxKey[0]);
+        }
+        return treeNodeHashMap.get(maxKey);
     }
 
     static String preorderTreeSerialization(BiTreeNode root){
         // create and return the String for the serialized tree
         return preorderTreeSerialization(root, "");
     }
+
     private static String preorderTreeSerialization(BiTreeNode root, String serialString) {
         // base criteria
         if(root != null) {
@@ -138,4 +141,21 @@ class BiTree {
         }
         return serialString;
     }
+
+    static int levelDiff(BiTreeNode root){
+        Queue<BiTreeNode> nodequeue = new LinkedList<>();
+        BiTreeNode tempNode;
+        int oddSum = root.data, evenSum = 0;
+        boolean odd = true;
+        nodequeue.add(root.left);
+        while (!nodequeue.isEmpty()){
+            tempNode = nodequeue.poll();
+            if(odd) oddSum += tempNode.data;
+            else evenSum += tempNode.data;
+
+            odd = !odd;
+        }
+        return 0;
+    }
+
 }

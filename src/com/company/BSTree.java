@@ -14,6 +14,7 @@ public class BSTree {
         if(biTree == null) return null;
         ArrayList<Integer> sortedInorderTree = getInorder(biTree);
         shellsort(sortedInorderTree);
+        arrayToBST(sortedInorderTree, biTree);
         return biTree;
     }
 
@@ -55,6 +56,14 @@ public class BSTree {
             getInorder(tree.left, array);
             array.add(tree.data);
             getInorder(tree.right, array);
+        }
+    }
+
+    static void arrayToBST(ArrayList<Integer> sortedList, BiTreeNode tree){
+        if(tree != null){
+            arrayToBST(sortedList, tree.left);
+            tree.data = sortedList.remove(sortedList.size()-1);
+            arrayToBST(sortedList, tree.right);
         }
     }
 }

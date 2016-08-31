@@ -18,7 +18,7 @@ public class Main {
                 Arrays.asList(2, 5, 3, 7, 11, 8, 10, 13, 6)
         )));
         */
-        grid_walk();
+        callBiTree2();
     }
 
     private static void callRotateFunc(){
@@ -118,8 +118,9 @@ public class Main {
 
     private static void callBSTree(){
 
-        BiTreeNode tree = BiTree.deserializeTree("20 40 L 20 60 R 10 20 L 10 30 R");
+        BiTreeNode tree = BiTree.deserializeTree("10 40 L 10 60 R 20 10 L 20 30 R");
         BSTree.biTreeToBSTree(tree);
+        System.out.println(tree);
 
     }
 
@@ -208,62 +209,7 @@ public class Main {
         return L.get(maxIndex);
     }
 
-    private static void grid_walk(){
-        int count = 0, num_dimensions = 0, num_steps = 0, size, cases = 1;
-        String[] split;
-        Scanner scan = new Scanner(System.in);
-        int[] init_pos = new int[0], grid_dim = new int[0];
-        while (scan.hasNext() && cases != 0){
-            split = scan.nextLine().split(" ");
-            size = split.length;
-            if(size == 1){
-                cases = Integer.parseInt(split[0]);
-            }
-            if (size == 2){
-                if(num_dimensions == 0 && num_steps == 0){
-                    num_dimensions = Integer.parseInt(split[0]);
-                    num_steps = Integer.parseInt(split[1]);
-                }
-                else if (init_pos.length == 0){
-                    init_pos = new int[num_dimensions];
-                    for(int x = 0; x < size; x++){
-                        init_pos[x] = Integer.parseInt(split[x]);
-                    }
-                }
-                else if (grid_dim.length == 0){
-                    grid_dim = new int[num_dimensions];
-                    for(int x = 0; x < size; x++){
-                        grid_dim[x] = Integer.parseInt(split[x]);
-                    }
-                }
-            }
-            if (count != 0 && count%3 == 0){
-                System.out.println(grid_walk(init_pos, grid_dim, num_steps));
-                cases--;
-                num_dimensions = 0;
-                num_steps = 0;
-            }
-            count++;
-        }
-    }
-
-    private static int grid_walk(int position[], int grid_demensions[], int M){
-        if(M == 0){
-            return 1;
-        }
-        int steps = 0;
-        for(int j = 0; j < position.length; j++){
-            if(position[j] > 1){
-                position[j] -= 1;
-                steps += grid_walk(position, grid_demensions, M-1);
-                position[j] += 1;
-            }
-            if(position[j] < grid_demensions[j]){
-                position[j] += 1;
-                steps += grid_walk(position, grid_demensions, M-1);
-                position[j] -= 1;
-            }
-        }
-        return steps;
+    private static void callBiTree2(){
+        BiTree.levelDiff(BiTree.deserializeTree("10 20 L 10 30 R 20 40 L 20 60 R"));
     }
 }
