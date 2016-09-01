@@ -147,6 +147,7 @@ class BiTree {
         levelDiff(root, sums, false);
         return sums[0] - sums[1];
     }
+
     private static void levelDiff(BiTreeNode root, int sums[], boolean even){
         if(root == null) return;
         if(even) sums[1] += root.data;
@@ -154,6 +155,39 @@ class BiTree {
         even = !even;
         levelDiff(root.left, sums, even);
         levelDiff(root.right, sums, even);
+    }
+
+    static String verticalPrint(BiTreeNode root){
+        HashMap<Integer, ArrayList<Integer>> levelMap = new HashMap<>();
+        verticalPrint(root, 0, levelMap);
+        final int[] lowestKey = {Integer.MAX_VALUE};
+        final int[] highestKey = {Integer.MIN_VALUE};
+        levelMap.keySet().forEach(key ->{
+            if(key < lowestKey[0]) lowestKey[0] = key;
+            if(key > highestKey[0]) highestKey[0] = key;
+        });
+        for (int i = lowestKey[0]; i <= highestKey[0]; i++){
+            levelMap.get(i).forEach(key -> System.out.print(key + " "));
+            System.out.print("$ ");
+        }
+
+        return "";
+    }
+
+    private static void verticalPrint(BiTreeNode root, int level, HashMap<Integer, ArrayList<Integer>> levelMap){
+        if(root != null){
+            ArrayList<Integer> levelList = levelMap.get(level);
+            if(levelList == null){
+                levelList = new ArrayList<>();
+                levelList.add(root.data);
+                levelMap.put(level, levelList);
+            }
+            else{
+                levelList.add(root.data);
+            }
+            verticalPrint(root.left, level-1, levelMap);
+            verticalPrint(root.right, level+1, levelMap);
+        }
     }
 
 }

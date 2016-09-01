@@ -7,8 +7,6 @@ package com.company;
 class BiTreeNode extends Node{
     BiTreeNode left = null, right = null;
 
-    BiTreeNode(){super();}
-
     BiTreeNode(int data){
         super(data);
     }

@@ -18,7 +18,9 @@ public class Main {
                 Arrays.asList(2, 5, 3, 7, 11, 8, 10, 13, 6)
         )));
         */
-        callBiTree2();
+        // callLevelSum();
+        // callVerticalPrint();
+        System.out.println(callCelebProb());
     }
 
     private static void callRotateFunc(){
@@ -209,11 +211,46 @@ public class Main {
         return L.get(maxIndex);
     }
 
-    private static void callBiTree2(){
+    private static void callLevelSum(){
         System.out.println(
                 BiTree.levelDiff(
                     BiTree.deserializeTree("10 20 L 10 30 R 20 40 L 20 60 R")
                 )
         );
+    }
+
+    private static void callVerticalPrint(){
+        System.out.println(
+                BiTree.verticalPrint(
+                        BiTree.deserializeTree("10 20 L 10 30 R 20 40 L 20 60 R")
+                )
+        );
+    }
+
+    private static int callCelebProb(){
+        int N = 4;
+        int MATRIX[][] = {
+            {0, 0, 1, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 0},
+            {0, 0, 1, 0}
+        };
+
+        int p1 = 0, p2 = N-1;
+        while (p1 < p2){
+            if(MATRIX[p1][p2] == 1) p1++;
+            else p2--;
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            if (i != p2 && (MATRIX[p1][i] == 1 || MATRIX[i][p1] == 0))
+                return -1;
+        }
+        return p1;
+    }
+
+    private static void callTopoSort(){
+        DirectedGraphNode graph = new DirectedGraphNode("5 0 5 2 2 3 4 0 4 1 1 3");
     }
 }
