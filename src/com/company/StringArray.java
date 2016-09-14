@@ -74,4 +74,214 @@ class StringArray {
 
         System.out.println("Reversed string: \""+result+"\"\n");
     }
+
+    static boolean detectDuplicates(char str[]){
+        if(str == null) return true;
+        int len = str.length;
+        if(len < 2) return false;
+
+        for(int i = 1; i < len; i++){
+            for(int j = 0; j < i; j++){
+                if(str[j] == str[i]) return true;
+            }
+        }
+
+        boolean uniqueChars[] = new boolean[256];
+        int charInt;
+        for (char aStr : str) {
+            charInt = aStr;
+            if (uniqueChars[charInt]) return true;
+            uniqueChars[charInt] = true;
+        }
+
+        return false;
+    }
+
+    static void reverseAString(char str[]){
+        if(str == null) return;
+        int len = str.length;
+        if(len < 2) return;
+
+        int begin = 0, end = len-1;
+        char tmp;
+        while(begin < end){
+            tmp = str[begin];
+            str[begin++] = str[end];
+            str[end--] = tmp;
+        }
+        System.out.println(str);
+    }
+
+    static void removeDuplicates(char str[]){
+        if(str == null) return;
+        int len = str.length;
+        if(len < 2) return;
+        int tail = 1;
+        for (int i = 1; i < len; ++i) {
+            int j;
+            for (j = 0; j < tail; ++j) {
+                if (str[i] == str[j]) break;
+            }
+            if (j == tail) str[tail++] = str[i];
+        }
+        if(tail < len) str[tail] = 0;
+        System.out.println(str);
+    }
+
+    static boolean isAnagram(char str1[], char str2[]){
+        if(str1 == null ||  str2 ==null || str1.length != str2.length) return false;
+        int chars[] = new int[256];
+        int cInt;
+        for(char c : str1){
+            cInt = c;
+            chars[cInt] += 1;
+        }
+        for(char c : str2){
+            cInt = c;
+            chars[cInt] -= 1;
+        }
+        for(int i : chars){
+            if(i != 0) return false;
+        }
+        return true;
+    }
+
+    static void replaceSpaces(char str[]){
+        if(str == null) return;
+        int len = str.length;
+        int spaceCount = 0;
+        for(int strIndex = 0; strIndex < len; strIndex++)
+            if(str[strIndex] == ' ') spaceCount++;
+        int newLen = len + spaceCount * 2;
+        char newStr[] = new char[newLen];
+        len--;
+        newLen--;
+        for(; len >= 0; len--){
+            if(str[len] == ' '){
+                newStr[newLen--] = '0';
+                newStr[newLen--] = '2';
+                newStr[newLen--] = '%';
+            }
+            else {
+                newStr[newLen--] = str[len];
+            }
+        }
+        System.out.println(newStr);
+
+    }
+
+    static void matrixRotate90Deg(int matrix[][]){
+        int N = matrix.length;
+        int spiral[] = new int[N*N];
+        int rStart, cEnd, rEnd, cStart, i;
+        rStart = 0;
+        cEnd = N - 1;
+        rEnd = N - 1;
+        cStart = 0;
+
+        for(int x = 0; x < spiral.length;){
+            if(cStart > cEnd) break;
+            for(i = cStart; i <= cEnd; i++)
+                spiral[x++] = matrix[rStart][i];
+            rStart++;
+
+            if(rStart > rEnd) break;
+            for(i = rStart; i <= rEnd; i++)
+                spiral[x++] = matrix[i][cEnd];
+            cEnd--;
+
+            if(cEnd < cStart) break;
+            for(i = cEnd; i >= cStart; i--)
+                spiral[x++] = matrix[rEnd][i];
+            rEnd--;
+
+            if(rEnd < rStart) break;
+            for(i = rEnd; i <= rStart; i++)
+                spiral[x++] = matrix[i][cStart];
+            cStart++;
+        }
+
+        rStart = cStart = 0;
+        rEnd = cEnd = N - 1;
+        for(int y = 0; y < spiral.length; y++){
+            if(rStart > rEnd) break;
+            for(i = rStart; i <= rEnd; i++)
+                matrix[i][cEnd] = spiral[y++];
+            cEnd--;
+
+            if(cEnd < cStart) break;
+            for(i = cEnd; i >= cStart; i--)
+                matrix[rEnd][i] = spiral[y++];
+            rEnd--;
+
+            if(rEnd < rStart) break;
+            for(i = rEnd; i >= rStart; i--)
+                matrix[i][cStart] = spiral[y++];
+            cStart++;
+
+            if(cStart > cEnd) break;
+            for(i = cStart; i <= cEnd; i++)
+                matrix[rStart][i] = spiral[y++];
+            rStart++;
+        }
+
+        System.out.println(Arrays.deepToString(matrix));
+    }
+
+    static void matrixRotate90Deg2(int matrix[][]){
+        int N = matrix.length;
+        int offset, first, last ;
+        for(int layer = 0; layer < N / 2; ++layer){
+            first = layer;
+            last = N - 1 - layer;
+            for(int i = first; i < last; ++i){
+                offset = i - first;
+                int tmp = matrix[first][i];
+                matrix[first][i] = matrix[last-offset][first];
+                matrix[last-offset][first] = matrix[last][last-offset];
+                matrix[last][last-offset] = matrix[i][last];
+                matrix[i][last] = tmp;
+            }
+        }
+        System.out.println(Arrays.deepToString(matrix));
+    }
+
+    static void matrixZeroer(int matrix[][]){
+        int N = matrix.length;
+        int M = matrix[0].length;
+        int zeroRows[] = new int[N];
+        int zeroCols[] = new int[M];
+        for(int x = 0; x < N; x++){
+            for(int y = 0; y < M; y++){
+                if(matrix[x][y] == 0){
+                    zeroCols[y] = 1;
+                    zeroRows[x] = 1;
+                }
+            }
+        }
+
+        for (int x = 0; x < N; x++){
+            for (int y = 0; y < M; y++){
+                if(zeroCols[y] == 1 || zeroRows[x] == 1 )
+                    matrix[x][y] = 0;
+            }
+        }
+        System.out.println(Arrays.deepToString(matrix));
+
+    }
+
+    static boolean isSubstring(char str1[], char str2[]){
+        if(str1 == null || str2 == null || str1.length != str2.length) return false;
+        int len = str1.length;
+        char temp;
+        for (char ignored : str1) {
+            for (int i = 1; i < len; i++) {
+                temp = str2[i];
+                str2[i] = str2[0];
+                str2[0] = temp;
+            }
+            if (Arrays.equals(str2, str1)) return true;
+        }
+        return false;
+    }
 }

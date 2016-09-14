@@ -3,27 +3,15 @@ package com.company;
 import java.util.*;
 
 public class Main {
-
+    private static String string = "hello";
+    private static String string2 = "elloh";
+    private static char[] str = string.toCharArray();
+    private static char[] str2 = string2.toCharArray();
     public static void main(String[] args) {
-        // callStringReverseFunc();
-        // callRotateFunc();
-        // callLinkList();
-        // callBiTree();
-        // callSpiralMatrix();
-        // callBSTree();
-        /* System.out.println(findLIS(new Vector<Integer>(
-                Arrays.asList(2, 5, 3, 7, 11, 8, 10, 13, 6)
-        )));
-        System.out.println(findLISN2(new Vector<Integer>(
-                Arrays.asList(2, 5, 3, 7, 11, 8, 10, 13, 6)
-        )));
-        */
-        // callLevelSum();
-        // callVerticalPrint();
-        System.out.println(callCelebProb());
+        System.out.println(StringArray.isSubstring(str, str2));
     }
 
-    private static void callRotateFunc(){
+    private static void rotateFunc(){
         StringArray.rotateArray(new Integer[]{1,2}, 6);
         StringArray.rotateArray(new Integer[]{1,2}, -5);
         StringArray.rotateArray(new Integer[]{}, 6);
@@ -32,14 +20,14 @@ public class Main {
         StringArray.rotateArray(new Integer[]{1,2,3,4,5,6,7,8}, 3);
     }
 
-    private static void callStringReverseFunc(){
+    private static void stringReverseFunc(){
         StringArray.stringReversal("This is a sentence.");
         StringArray.stringReversal("");
         StringArray.stringReversal("Two! Words!?");
         StringArray.stringReversal("Run forrest Run");
     }
 
-    private static void callLinkList(){
+    private static void linkList(){
         Node node = LinkList.createList(new Integer[]{5,35,8,1,78,6,4});
         LinkList.printList(node);
         node = LinkList.removeFromList(node, 4);
@@ -52,7 +40,7 @@ public class Main {
         LinkList.printList(node);
     }
 
-    private static void callBiTree(){
+    private static void biTree(){
         String serialString;
         BiTreeNode tree, tree2;
 
@@ -103,7 +91,7 @@ public class Main {
 
     }
 
-    private static void callSpiralMatrix(){
+    private static void spiralMatrix(){
         int index = 0;
         try {
             index = SpiralMatrix.getFromSpiralMatrix(new int[][]{
@@ -118,7 +106,7 @@ public class Main {
         System.out.println(index);
     }
 
-    private static void callBSTree(){
+    private static void bSTree(){
 
         BiTreeNode tree = BiTree.deserializeTree("10 40 L 10 60 R 20 10 L 20 30 R");
         BSTree.biTreeToBSTree(tree);
@@ -128,8 +116,6 @@ public class Main {
 
     private static List<Integer> findLIS(List<Integer> sequence){ //N^2
         final int size = sequence.size();
-        // Add boundary case, when array n is zero
-        // Depend on smart pointers
         Vector<Integer> tailIndicies   = new Vector<Integer>(){{
             for (int x = 0; x < size; x++){
                 add(0);
@@ -143,11 +129,12 @@ public class Main {
         int len = 1; // always points empty slot
         for (int i = 1; i < size; i++)
         {
-            if (sequence.get(i) < sequence.get(tailIndicies.get(0)))
+            Integer key = sequence.get(i);
+            if (key < sequence.get(tailIndicies.get(0)))
                 // new smallest value
                 tailIndicies.set(0, i);
 
-            else if (sequence.get(i) > sequence.get(tailIndicies.get(len-1))) {
+            else if (key > sequence.get(tailIndicies.get(len-1))) {
                 // A[i] wants to extend largest subsequence
                 prevIndicies.set(i, tailIndicies.get(len-1));
                 tailIndicies.set(len++, i);
@@ -157,12 +144,12 @@ public class Main {
                 // arr[i] wants to be a potential condidate of
                 // future subsequence
                 // It will replace ceil value in tailIndices
-                int pos = CeilIndex(sequence, tailIndicies, -1, len - 1, sequence.get(i));
+                int pos = CeilIndex(sequence, tailIndicies, -1, len - 1, key);
                 prevIndicies.set(i, tailIndicies.get(pos-1));
                 tailIndicies.set(pos, i);
             }
         }
-        Vector<Integer> res = new Vector<Integer>();
+        Vector<Integer> res = new Vector<>();
         for(int y = tailIndicies.get(len-1); y >= 0; y = prevIndicies.get(y)){
             res.add(0, sequence.get(y));
         }
@@ -190,7 +177,7 @@ public class Main {
         int maxIndex = 0, maxSize = 0;
         Vector<Vector<Integer>> L = new Vector<Vector<Integer>>(){{
             for(int x = 0; x < size; x++){
-                add(new Vector<Integer>());
+                add(new Vector<>());
             }
         }};
         L.get(0).add(sequence.get(0));
@@ -211,7 +198,7 @@ public class Main {
         return L.get(maxIndex);
     }
 
-    private static void callLevelSum(){
+    private static void levelSum(){
         System.out.println(
                 BiTree.levelDiff(
                     BiTree.deserializeTree("10 20 L 10 30 R 20 40 L 20 60 R")
@@ -219,7 +206,7 @@ public class Main {
         );
     }
 
-    private static void callVerticalPrint(){
+    private static void verticalPrint(){
         System.out.println(
                 BiTree.verticalPrint(
                         BiTree.deserializeTree("10 20 L 10 30 R 20 40 L 20 60 R")
@@ -227,7 +214,7 @@ public class Main {
         );
     }
 
-    private static int callCelebProb(){
+    private static int celebProb(){
         int N = 4;
         int MATRIX[][] = {
             {0, 0, 1, 0},
@@ -250,7 +237,8 @@ public class Main {
         return p1;
     }
 
-    private static void callTopoSort(){
+    private static void topoSort(){
         DirectedGraphNode graph = new DirectedGraphNode("5 0 5 2 2 3 4 0 4 1 1 3");
     }
+
 }
