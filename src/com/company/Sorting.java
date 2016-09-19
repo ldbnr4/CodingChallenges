@@ -6,6 +6,7 @@ package com.company;
  */
 public class Sorting {
     static int[] mergeSort(int[] array, int lo, int hi){
+        if(lo == hi) return new int[]{array[lo]};
         if(lo < hi) {
             int mid = (hi + lo) / 2;
             int[] lowerHalf = mergeSort(array, lo, mid);
