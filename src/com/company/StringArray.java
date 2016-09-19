@@ -1,6 +1,8 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.Math.abs;
 
@@ -284,4 +286,23 @@ class StringArray {
         }
         return false;
     }
+
+    static List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        buildList(candidates, result, new ArrayList<Integer>(), target, 0);
+        return result;
+    }
+
+    private static void buildList(int[] candidates, List<List<Integer>> result, List<Integer> currentList, int target, int start){
+        if(target > 0){
+            for(int i = start; i < candidates.length; i++){
+                currentList.add(candidates[i]);
+                buildList(candidates, result, currentList, target - candidates[i], i);
+                currentList.remove(currentList.size() - 1);
+            }
+        }
+        else if(target == 0 ) result.add(new ArrayList<Integer>(currentList));
+
+    }
+
 }

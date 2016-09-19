@@ -2,25 +2,24 @@ package com.company;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+
 /**
  * Created by boyice on 8/16/2016.
  *
  */
 class LinkList {
+
     @Nullable
     static Node createList(Integer[] nums){
-        if( nums.length == 0 ) {
-            System.out.println("Empty array!\n");
-            return null;
-        }
+
+        if( nums == null  || nums.length == 0 ) return null;
         int length = nums.length;
-        Node head = null;
-        Node prevNode = null;
-        for (int i = 0; i < length; i++ ) {
-            Node newNode = new Node(nums[i]);
-            if( i == 0 ) head = newNode;
-            if( i >= 1 && prevNode != null) prevNode.next = newNode;
-            prevNode = newNode;
+        Node head = new Node(nums[0]);
+        Node cursor = head;
+        for (int i = 1; i < length; i++ ) {
+            cursor.addToEnd(nums[i]);
+            cursor = cursor.next;
         }
         return head;
     }
@@ -63,5 +62,98 @@ class LinkList {
         return head;
     }
 
+    static Node findNthFromLast(Node head, int pos){
+        if(head == null) return null;
+        Node runner = head;
+        for(int i = 0; i < pos; i++){
+            runner = runner.next;
+            if (runner == null) return null;
+        }
+        while(runner.next != null){
+            head = head.next;
+            runner = runner.next;
+        }
+        return head;
+    }
 
+    static void removeDuplicates(Node head){
+        ArrayList<Integer> nodeList = new ArrayList<>();
+        nodeList.add(head.data);
+        Node prev = new Node();
+        while (head != null){
+            if(!nodeList.contains(head.data)){
+                nodeList.add(head.data);
+                prev = head;
+            }
+            else{
+                prev.next = head.next;
+            }
+            head = head.next;
+        }
+    }
+
+    static void removeDuplicatesNoBuff(Node head){
+        Node runner;
+        Node cursor = head.next;
+        Node prev = head;
+        while (cursor != null){
+            runner = head;
+            while (runner != cursor){
+                if(runner.data == cursor.data) break;
+                runner = runner.next;
+            }
+            if(runner == cursor){
+                prev = cursor;
+            }
+            else {
+                prev.next = cursor.next;
+            }
+            cursor = cursor.next;
+        }
+    }
+
+    static void removeThisNode(Node node){
+        if(node == null) return;
+        Node next = node.next;
+        if(next == null) return;
+        node.data = next.data;
+        node.next = next.next;
+
+    }
+
+    static int listAddition(Node list1, Node list2){
+        int list1_int = linkListToInt(list1, 1);
+        int list2_int = linkListToInt(list2, 1);
+        return list1_int + list2_int;
+    }
+
+    private static int linkListToInt(Node list, int factor){
+        if(list == null) return 0;
+        return factor*list.data + linkListToInt(list.next, factor*10);
+    }
+
+    static Node findBeginCycle(Node head){
+        ArrayList<Integer> nodeList = new ArrayList<>();
+        while (!nodeList.contains(head.data)){
+            nodeList.add(head.data);
+            head = head.next;
+        }
+        return head;
+
+    }
+
+    static Node findBeginCycleNoBuffer(Node head){
+        Node slow = head;
+        Node fast = head.next;
+        while (slow != fast){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        slow = slow.next;
+        while (slow != head){
+            slow = slow.next;
+            if(slow == fast) head = head.next;
+        }
+        return head;
+    }
 }

@@ -7,8 +7,13 @@ public class Main {
     private static String string2 = "elloh";
     private static char[] str = string.toCharArray();
     private static char[] str2 = string2.toCharArray();
+    private static Integer[] nums = null;
+    private static Integer[] nums2 = {0, 4, 3, 7, 1};
+    private static Node head = LinkList.createList(nums);
+    private static Node head2 = LinkList.createList(nums2);
+
     public static void main(String[] args) {
-        System.out.println(StringArray.isSubstring(str, str2));
+        System.out.println(Arrays.toString(Sorting.mergeSort(new int[]{5, 6, 3, 1, 8, 9}, 0, 5)));
     }
 
     private static void rotateFunc(){
