@@ -1,24 +1,22 @@
 package com.company;
 
-import com.intellij.openapi.vcs.history.VcsRevisionNumber;
-
 import java.util.ArrayList;
 
 /**
  * Created by boyice on 8/26/2016.
  *
  */
-public class BSTree {
+class BSTree {
 
     static BiTreeNode biTreeToBSTree(BiTreeNode biTree){
         if(biTree == null) return null;
         ArrayList<Integer> sortedInorderTree = getInorder(biTree);
-        shellsort(sortedInorderTree);
-        arrayToBST(sortedInorderTree, biTree);
+        shellSort(sortedInorderTree);
+        arrayListToBST(sortedInorderTree, biTree);
         return biTree;
     }
 
-    static void shellsort( ArrayList<Integer> arr ) {
+    private static void shellSort(ArrayList<Integer> arr) {
         int n = arr.size();
         // Start with a big gap, then reduce the gap
         for (int gap = n/2; gap > 0; gap /= 2)
@@ -45,13 +43,13 @@ public class BSTree {
         }
     }
 
-    static ArrayList<Integer> getInorder(BiTreeNode tree){
-        ArrayList<Integer> sortedList = new ArrayList();
+    private static ArrayList<Integer> getInorder(BiTreeNode tree){
+        ArrayList<Integer> sortedList = new ArrayList<>();
         getInorder(tree, sortedList);
         return sortedList;
     }
 
-    static void getInorder(BiTreeNode tree, ArrayList<Integer> array){
+    private static void getInorder(BiTreeNode tree, ArrayList<Integer> array){
         if (tree != null){
             getInorder(tree.left, array);
             array.add(tree.data);
@@ -59,11 +57,11 @@ public class BSTree {
         }
     }
 
-    static void arrayToBST(ArrayList<Integer> sortedList, BiTreeNode tree){
+    private static void arrayListToBST(ArrayList<Integer> sortedList, BiTreeNode tree){
         if(tree != null){
-            arrayToBST(sortedList, tree.left);
+            arrayListToBST(sortedList, tree.left);
             tree.data = sortedList.remove(sortedList.size()-1);
-            arrayToBST(sortedList, tree.right);
+            arrayListToBST(sortedList, tree.right);
         }
     }
 }

@@ -13,7 +13,7 @@ public class Main {
     private static Node head2 = LinkList.createList(nums2);
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(Sorting.mergeSort(new int[]{5, 6, 3, 1, 8, 9}, 0, 5)));
+        //BiTree.firstCommonAncestor();
     }
 
     private static void rotateFunc(){
@@ -163,8 +163,7 @@ public class Main {
 
     // Binary search (note boundaries in the caller)
     // sequence[] is ceilIndex in the caller
-    private static int CeilIndex(List<Integer> sequence, List<Integer> tailIndicies, int l, int r, int key)
-    {
+    private static int CeilIndex(List<Integer> sequence, List<Integer> tailIndicies, int l, int r, int key) {
         while (r - l > 1)
         {
             int m = l + (r - l)/2;
@@ -179,25 +178,23 @@ public class Main {
 
     private static List<Integer> findLISN2(List<Integer> sequence){
         final int size = sequence.size();
-        int maxIndex = 0, maxSize = 0;
+        int maxIndex = Integer.MIN_VALUE, maxSize = Integer.MIN_VALUE;
         Vector<Vector<Integer>> L = new Vector<Vector<Integer>>(){{
             for(int x = 0; x < size; x++){
                 add(new Vector<>());
             }
         }};
         L.get(0).add(sequence.get(0));
-        for(int i = 1; i < size; i++){
-            for(int j = 0; j < i; j++){
-                if((sequence.get(j) < sequence.get(i)) && (L.get(i).size() < L.get(j).size()+1)){
-                    L.set(i, (Vector<Integer>) L.get(j).clone());
+        for(int nextListIdx = 1; nextListIdx < size; nextListIdx++){
+            for(int prevListIdx = 0; prevListIdx < nextListIdx; prevListIdx++){
+                if( (sequence.get(nextListIdx) > sequence.get(prevListIdx)) && (L.get(nextListIdx).size() < L.get(prevListIdx).size() + 1) ){
+                    L.set(nextListIdx, new Vector<>(L.get(prevListIdx)));
                 }
             }
-            L.get(i).add(sequence.get(i));
-        }
-        for (int y = 0; y < size; y++){
-            if (L.get(y).size() > maxSize){
-                maxIndex = y;
-                maxSize = L.get(y).size();
+            L.get(nextListIdx).add(sequence.get(nextListIdx));
+            if(L.get(nextListIdx).size() > maxSize){
+                maxSize = L.get(nextListIdx).size();
+                maxIndex = nextListIdx;
             }
         }
         return L.get(maxIndex);

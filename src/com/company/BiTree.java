@@ -190,4 +190,19 @@ class BiTree {
         }
     }
 
+    static void firstCommonAncestor(BiTreeNode root, BiTreeNode node1, BiTreeNode node2){
+        if(root != null) {
+            if(covers(root.left, node1) && covers(root.left, node2)) firstCommonAncestor(root.left, node1, node2);
+            else if(covers(root.right, node1) && covers(root.right, node2)) firstCommonAncestor(root.right, node1, node2);
+            System.out.println(root.data);
+        }
+    }
+
+    static private boolean covers(BiTreeNode parent, BiTreeNode child) {
+        return parent != null && (
+                child == null || parent.data == child.data ||
+                covers(parent.left, child) || covers(parent.right, child)
+        );
+    }
+
 }
