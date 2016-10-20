@@ -5,23 +5,21 @@ package com.company;
  *
  */
 class Sorting {
-    private static int result[];
-    private static int k = 0;
-    static int[] mergeSort(int[] array, int lo, int hi){
-        if(lo == hi) return new int[]{array[lo]};
+    static Integer[] mergeSort(Integer[] array, int lo, int hi){
+        if(lo == hi) return new Integer[]{array[lo]};
         if(lo < hi) {
             int mid = (hi + lo) / 2;
-            int[] lowerHalf = mergeSort(array, lo, mid);
-            int[] upperHalf = mergeSort(array, mid + 1, hi);
+            Integer[] lowerHalf = mergeSort(array, lo, mid);
+            Integer[] upperHalf = mergeSort(array, mid + 1, hi);
             return merge(lowerHalf, upperHalf);
         }
         return null;
     }
 
-    private static int[] merge(int[] lowerHalf, int[] upperHalf) {
+    private static Integer[] merge(Integer[] lowerHalf, Integer[] upperHalf) {
         int loLength = lowerHalf.length;
         int highLength = upperHalf.length;
-        int[] result = new int[loLength+highLength];
+        Integer[] result = new Integer[loLength+highLength];
         int k = 0, i = 0, j = 0;
         while (i < loLength && j < highLength){
             if(lowerHalf[i] <= upperHalf[j]) result[k++] = lowerHalf[i++];

@@ -156,4 +156,17 @@ class LinkList {
         }
         return head;
     }
+
+    static Node reverseLinkedList(Node head){
+        Node currNode = head;
+        Node prev = null;
+        Node next = null;
+        while (currNode != null){
+            next = currNode.next;
+            currNode.next = prev;
+            prev = currNode;
+            currNode = next;
+        }
+        return prev;
+    }
 }

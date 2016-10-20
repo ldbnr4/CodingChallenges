@@ -190,12 +190,13 @@ class BiTree {
         }
     }
 
-    static void firstCommonAncestor(BiTreeNode root, BiTreeNode node1, BiTreeNode node2){
+    static BiTreeNode firstCommonAncestor(BiTreeNode root, BiTreeNode node1, BiTreeNode node2){
         if(root != null) {
-            if(covers(root.left, node1) && covers(root.left, node2)) firstCommonAncestor(root.left, node1, node2);
-            else if(covers(root.right, node1) && covers(root.right, node2)) firstCommonAncestor(root.right, node1, node2);
-            System.out.println(root.data);
+            if(covers(root.left, node1) && covers(root.left, node2)) return firstCommonAncestor(root.left, node1, node2);
+            else if(covers(root.right, node1) && covers(root.right, node2)) return firstCommonAncestor(root.right, node1, node2);
+            return root;
         }
+        return null;
     }
 
     static private boolean covers(BiTreeNode parent, BiTreeNode child) {
@@ -203,6 +204,17 @@ class BiTree {
                 child == null || parent.data == child.data ||
                 covers(parent.left, child) || covers(parent.right, child)
         );
+    }
+
+    static BiTreeNode arrayToBiTree(Integer[] array, int index){
+        if(index <= array.length){
+            BiTreeNode root = new BiTreeNode(array[index-1]);
+            root.left = arrayToBiTree(array, index*2);
+            root.right = arrayToBiTree(array, index*2 + 1);
+            return root;
+        }
+        return null;
+
     }
 
 }

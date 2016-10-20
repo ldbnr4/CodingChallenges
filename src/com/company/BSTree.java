@@ -64,4 +64,9 @@ class BSTree {
             arrayListToBST(sortedList, tree.right);
         }
     }
+
+    static BiTreeNode arrayToBST(Integer[] array) {
+        Integer[] sortedArray = Sorting.mergeSort(array,0, array.length);
+        return BiTree.arrayToBiTree(sortedArray, 1);
+    }
 }
