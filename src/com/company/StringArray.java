@@ -1,8 +1,10 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.apache.batik.dom.util.HashTable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.abs;
 
@@ -303,6 +305,51 @@ class StringArray {
         }
         else if(target == 0 ) result.add(new ArrayList<Integer>(currentList));
 
+    }
+
+    private static class Entry{
+        String name;
+        int count;
+
+        Entry(String name, int count){
+            this.name = name;
+            this.count = count;
+        }
+    }
+
+    static void findTopUsers(String str, int k){
+        String[] users = str.split(",");
+        Hashtable<String, Integer> map = new Hashtable<>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(k);
+        PriorityQueue<Entry> maxHeap = new PriorityQueue<>(k, Collections.reverseOrder());
+        Integer loginCount;
+        int min;
+
+        for(String user : users){
+            loginCount = map.get(user);
+            if(loginCount == null) {
+                loginCount = 1;
+                map.put(user, loginCount);
+            }else {
+                map.replace(user, ++loginCount);
+            }
+            if(minHeap.size() < k){
+                minHeap.add(loginCount);
+            }
+            else if(loginCount > minHeap.peek()){
+                minHeap.poll();
+                minHeap.add(loginCount);
+            }
+        }
+
+        min = minHeap.peek();
+        for(Map.Entry<String, Integer> e : map.entrySet()){
+            if(e.getValue() >= min) maxHeap.add(new Entry(e.getKey(), e.getValue()));
+        }
+
+        for (Entry userEntry: maxHeap){
+            System.out.println(userEntry.name + " " + userEntry.count);
+        }
     }
 
 }

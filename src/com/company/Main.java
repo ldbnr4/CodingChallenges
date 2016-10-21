@@ -10,14 +10,13 @@ public class Main {
     private static char[] str = string.toCharArray();
     private static char[] str2 = string2.toCharArray();
     private static Integer[] nums = null;
-    private static Integer[] nums2 = {0, 4, 3, 7, 1, 19, 39, 5};
+    private static Integer[] nums2 = {4, 4, 3, 7, 1, 19, 39, 5};
+    private static String userStrings = "u1,u3,u4,u6,u2,u1,u3,u4,u1";
     private static Node head = LinkList.createList(nums);
     private static Node head2 = LinkList.createList(nums2);
 
     public static void main(String[] args) {
-        LinkList.printList(head2);
-        head2 = LinkList.reverseLinkedList(head2);
-        LinkList.printList(head2);
+        StringArray.findTopUsers(userStrings, 2);
     }
 
     private static void rotateFunc(){
